@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { Entry, entryEncoder, entryWithID } from '../../common/model';
 import { array, object, string } from '@mojotech/json-type-validation';
 
-const endpoint = 'http://localhost:3000';
+const endpoint = 'https://blog.api.uzimaru.com';
 
 export const getEntries = () => {
   return fetch(`${endpoint}/entries`)

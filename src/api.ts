@@ -1,7 +1,7 @@
 import { entryWithID } from '../common/model';
 import { array } from '@mojotech/json-type-validation';
 
-const endpoint = 'http://localhost:3000';
+const endpoint = 'https://blog.api.uzimaru.com';
 
 export const getEntries = () => {
   return fetch(`${endpoint}/entries`)
