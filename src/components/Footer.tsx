@@ -1,0 +1,20 @@
+import * as React from 'react';
+import styled from 'styled-components';
+import Icon from './Icon';
+
+export default () => (
+  <Wrapper>
+    <a href="https://uzimaru.com">
+      <Icon />
+    </a>
+  </Wrapper>
+);
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 256px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-black);
+`;

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap&subset=japanese');
+
+* {
+  --color-black: rgb(51, 51, 51);
+  --color-white: #fff;
+  --color-primary: #199861;
+  --color-accent: #195b98;
+  --color-black-75: rgba(51, 51, 51, 0.75);
+  --color-black-50: rgba(51, 51, 51, 0.5);
+  --color-black-25: rgba(51, 51, 51, 0.25);
+  --color-black-10: rgba(51, 51, 51, 0.1);
+  --color-black-5: rgba(51, 51, 51, 0.05);
+
+  box-sizing: border-box;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
