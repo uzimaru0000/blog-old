@@ -1,0 +1,26 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "parcel watch -t node --bundle-node-modules ./src/main.ts",
+    "build": "parcel build -t node --bundle-node-modules ./src/main.ts",
+    "start": "node ./dist/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mojotech/json-type-validation": "^3.1.0",
+    "commander": "^4.0.1",
+    "node-fetch": "^2.6.0",
+    "parcel": "^1.12.4",
+    "prompts": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/node-fetch": "^2.5.4",
+    "@types/prompts": "^2.0.3"
+  }
+}

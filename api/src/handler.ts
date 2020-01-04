@@ -34,9 +34,9 @@ export namespace Handler {
 
     try {
       const data = await entry.runPromise(body);
-      await repo.create(data);
+      const id = await repo.create(data);
 
-      send(res, 200, { message: 'success' });
+      send(res, 200, { message: 'success', id });
     } catch (e) {
       console.error(e);
       errorHandle(res, e);

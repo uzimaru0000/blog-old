@@ -47,12 +47,21 @@ export const entry = object({
   date: number().map(x => new Date(x)),
 });
 
+export const entryWithID = object({
+  id: string(),
+  title: string(),
+  content: string(),
+  tags: array(string()),
+  image: string(),
+  date: number().map(x => new Date(x)),
+});
+
 export const entryEncoder = (entry: Entry) => ({
   ...entry,
   date: entry.date.getTime(),
 });
 
 export const withID = <T>(id: string) => (data: T) => ({
-  ...data,
   id,
+  ...data,
 });

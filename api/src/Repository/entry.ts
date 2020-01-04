@@ -1,10 +1,10 @@
-import { Entry, entry, WithID, withID } from '../model';
+import { Entry, entry, WithID, withID, entryEncoder } from '../model';
 import faunadb, { query as q } from 'faunadb';
 import { FaunaResponseDecoder } from '../utils';
 import { array } from '@mojotech/json-type-validation';
 
 export interface Repository {
-  create(data: Entry): Promise<void>;
+  create(data: Entry): Promise<string>;
   getAll(): Promise<WithID<Entry>[]>;
   get(id: string): Promise<WithID<Entry>>;
   update(data: WithID<Entry>): Promise<void>;
@@ -23,7 +23,14 @@ export class FaunaRepository implements Repository {
   );
 
   async create(data: Entry) {
-    await this.client.query(q.Create(q.Ref(q.Collection('Entry')), { data }));
+    return await this.client
+      .query(
+        q.Create(q.Collection('Entry'), {
+          data: entryEncoder(data),
+        })
+      )
+      .then(this.entryWithID.runPromise)
+      .then(x => x.id);
   }
 
   async getAll() {
