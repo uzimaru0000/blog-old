@@ -2,7 +2,9 @@
   "name": "cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "bin": {
+    "blog": "./bin/run.js"
+  },
   "scripts": {
     "watch": "parcel watch -t node --bundle-node-modules ./src/main.ts",
     "build": "parcel build -t node --bundle-node-modules ./src/main.ts",
