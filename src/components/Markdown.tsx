@@ -32,6 +32,7 @@ export default (props: ReactMarkdownProps) => (
 
 const Text = styled.p`
   ${Plane}
+  margin: 0.5rem 0;
 `;
 
 const Heading = (level: number) => (props: React.PropsWithChildren<{}>) => {

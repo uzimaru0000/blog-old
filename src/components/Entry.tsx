@@ -98,6 +98,7 @@ const Content = styled.pre`
   overflow: hidden;
   width: 100%;
   max-height: 160px;
+  margin-bottom: 1rem;
 
   ${media.lessThan('medium')`
     display: none;
