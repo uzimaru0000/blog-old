@@ -25,6 +25,11 @@ export default (token: string) =>
           seperator: ',',
           initial: '',
         },
+        {
+          type: 'text',
+          name: 'image',
+          message: 'input image path : ',
+        },
       ]);
 
       const res = await postEntry(token, {
@@ -32,9 +37,22 @@ export default (token: string) =>
         content,
         date: new Date(),
         tags: value.tags,
-        image: '',
+        image: await loadImage(value.image).then(
+          x => `data:image/png;base64,${x}`
+        ),
       }).then(x => x.json());
 
       console.log(`Post success\nid: ${res.id}`);
     },
   } as Cmd);
+
+const loadImage = (path: string) =>
+  new Promise<string>((res, rej) => {
+    fs.readFile(path, 'base64', (err, data) => {
+      if (err) {
+        rej(err);
+      } else {
+        res(data);
+      }
+    });
+  });
