@@ -4,6 +4,7 @@ import ListCmd from './list';
 import PostCmd from './post';
 import GetCmd from './get';
 import LoginCmd from './login';
+import RemoveCmd from './rm';
 
 const register = (program: Command) => (...cmds: Cmd[]) => {
   for (const cmd of cmds) {
@@ -16,4 +17,4 @@ const register = (program: Command) => (...cmds: Cmd[]) => {
   return program;
 };
 
-export { register, Cmd, ListCmd, PostCmd, GetCmd, LoginCmd };
+export { register, Cmd, ListCmd, PostCmd, GetCmd, LoginCmd, RemoveCmd };

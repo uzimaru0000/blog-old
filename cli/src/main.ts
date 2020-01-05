@@ -1,7 +1,7 @@
 import program from 'commander';
 import fs from 'fs';
 
-import { register, ListCmd, PostCmd, GetCmd, LoginCmd } from './cmd';
+import { register, ListCmd, PostCmd, GetCmd, LoginCmd, RemoveCmd } from './cmd';
 import { object, string } from '@mojotech/json-type-validation';
 
 (async () => {
@@ -12,7 +12,11 @@ import { object, string } from '@mojotech/json-type-validation';
 
   program.version('0.0.1');
 
-  register(program)(ListCmd, PostCmd(token), GetCmd, LoginCmd).parse(
-    process.argv
-  );
+  register(program)(
+    ListCmd,
+    PostCmd(token),
+    GetCmd,
+    LoginCmd,
+    RemoveCmd(token)
+  ).parse(process.argv);
 })();

@@ -1,54 +1,58 @@
 import { Cmd } from './type';
 import fs from 'fs';
-import { postEntry } from '../api';
+import { postEntry, uploadImage } from '../api';
 import prompts from 'prompts';
 
 export default (token: string) =>
   ({
     name: 'post',
-    args: ['<file-name>'],
+    args: ['<md-file>', '<image-file>'],
     description: 'post a blog entry',
-    async action(fileName: string) {
-      const content = fs.readFileSync(fileName).toString();
+    async action(mdFileName: string, imgFileName: string) {
+      try {
+        const [content, imageBuf] = await Promise.all([
+          readFile(mdFileName).then(x => x.toString()),
+          readFile(imgFileName),
+        ]);
 
-      const value = await prompts([
-        {
-          type: 'text',
-          name: 'title',
-          message: 'input entry title : ',
-        },
-        {
-          type: 'list',
-          name: 'tags',
-          message: 'input entry tags : ',
-          hint: 'separate ","',
-          seperator: ',',
-          initial: '',
-        },
-        {
-          type: 'text',
-          name: 'image',
-          message: 'input image path : ',
-        },
-      ]);
+        const value = await prompts([
+          {
+            type: 'text',
+            name: 'title',
+            message: 'input entry title : ',
+          },
+          {
+            type: 'list',
+            name: 'tags',
+            message: 'input entry tags : ',
+            hint: 'separate ","',
+            seperator: ',',
+            initial: '',
+          },
+        ]);
 
-      const res = await postEntry(token, {
-        title: value.title,
-        content,
-        date: new Date(),
-        tags: value.tags,
-        image: await loadImage(value.image).then(
-          x => `data:image/png;base64,${x}`
-        ),
-      }).then(x => x.json());
+        const res = await postEntry(token, {
+          title: value.title,
+          content,
+          date: new Date(),
+          tags: value.tags,
+          image: await uploadImage('f1d7dba802aa5fd', imageBuf).then(
+            x => x.data.link
+          ),
+        }).then(x => x.json());
 
-      console.log(`Post success\nid: ${res.id}`);
+        console.log(
+          `Post success\nURL: https://blog.uzimaru.com/entry/${res.id}`
+        );
+      } catch (e) {
+        console.error(e);
+      }
     },
   } as Cmd);
 
-const loadImage = (path: string) =>
-  new Promise<string>((res, rej) => {
-    fs.readFile(path, 'base64', (err, data) => {
+const readFile = (path: string) =>
+  new Promise<Buffer>((res, rej) => {
+    fs.readFile(path, (err, data) => {
       if (err) {
         rej(err);
       } else {

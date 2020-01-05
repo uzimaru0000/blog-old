@@ -21,7 +21,7 @@ const entryHandler = router(
   get('/entry/:id', Handler.getEntry(entryRepo)),
   post('/entry', verifying(authorizer)(Handler.createEntry(entryRepo))),
   patch('/entry', verifying(authorizer)(Handler.updateEntry(entryRepo))),
-  del('/entry', verifying(authorizer)(Handler.deleteEntry(entryRepo)))
+  del('/entry/:id', verifying(authorizer)(Handler.deleteEntry(entryRepo)))
 );
 
 const app = router(
