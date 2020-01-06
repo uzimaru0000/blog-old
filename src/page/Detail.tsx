@@ -77,7 +77,6 @@ const CatchUp = styled.div<{ image: string; isBlur: boolean }>`
     isBlur &&
     css`
       filter: blur(8px);
-      transform: scale(1.1);
     `};
   transition: 300ms ease;
 `;

@@ -14,6 +14,10 @@
   box-sizing: border-box;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 }
 
 html,
