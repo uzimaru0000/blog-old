@@ -5,6 +5,8 @@ import media from 'styled-media-query';
 import { RouteComponentProps } from 'react-router-dom';
 import { WithID, Entry as EntryType } from '../../common/model';
 import { getEntry } from '../api';
+import Share from '../components/Share';
+import { IconName } from '@fortawesome/fontawesome-svg-core';
 
 const useIntersection = (
   dom: HTMLDivElement | null,
@@ -29,6 +31,9 @@ export default (props: RouteComponentProps<{ id: string }>) => {
   const isIntersection = useIntersection(entryDOM.current, {
     rootMargin: '-10%',
   });
+  const shareLink = entry
+    ? encodeURI(`https://blog.uzimaru.com/entry/${entry.id}`)
+    : '';
 
   React.useEffect(() => {
     if (!props.match.params.id) return;
@@ -42,6 +47,24 @@ export default (props: RouteComponentProps<{ id: string }>) => {
         <InnerWrapper>
           {entry && <Entry {...entry} isExtend={true} />}
         </InnerWrapper>
+        <ShareWrapper>
+          <Share
+            icon={['fab', 'facebook']}
+            url={`https://www.facebook.com/sharer/sharer.php?u=${shareLink}`}
+            color="#3B5998"
+          />
+          <Share
+            icon={['fab', 'twitter']}
+            url={`https://twitter.com/intent/tweet?url=${shareLink}&text=${entry &&
+              entry.title}`}
+            color="#1DA1F2"
+          />
+          <Share
+            icon={['fab', 'get-pocket']}
+            url={`https://getpocket.com/save?${shareLink}`}
+            color="#EE4056"
+          />
+        </ShareWrapper>
       </Wrapper>
     </>
   );
@@ -79,4 +102,19 @@ const CatchUp = styled.div<{ image: string; isBlur: boolean }>`
       filter: blur(8px);
     `};
   transition: 300ms ease;
+`;
+
+const ShareWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem 0;
+
+  & a {
+    margin-right: 3rem;
+  }
+
+  & a:last-child {
+    margin-right: 0;
+  }
 `;
