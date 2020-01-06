@@ -24,6 +24,7 @@ export default (props: ReactMarkdownProps) => (
         listItem: ListItem,
         link: Link,
         thematicBreak: Hr,
+        image: Img,
       }}
       {...props}
     />
@@ -85,6 +86,7 @@ const ListItem = styled.li`
 
 const Link = styled.a`
   color: var(--color-accent);
+  font-size: 1em;
 
   &:hover {
     opacity: 0.5;
@@ -102,4 +104,9 @@ const Hr = styled.hr`
   );
   border: none;
   margin: 64px auto;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: auto;
 `;

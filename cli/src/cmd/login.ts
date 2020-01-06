@@ -1,6 +1,7 @@
 import { Cmd } from './type';
 import prompts from 'prompts';
 import { login } from '../api';
+import { existDir, mkdir } from '../util';
 import fs from 'fs';
 
 export default {
@@ -35,21 +36,3 @@ export default {
     }
   },
 } as Cmd;
-
-const existDir = (path: string) =>
-  new Promise<boolean>(res => {
-    fs.stat(path, err => {
-      res(err === null);
-    });
-  });
-
-const mkdir = (path: string) =>
-  new Promise<boolean>((res, rej) => {
-    fs.mkdir(path, err => {
-      if (err === null) {
-        res(true);
-      } else {
-        rej(err);
-      }
-    });
-  });

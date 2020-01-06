@@ -12,7 +12,7 @@ export default () => (
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: 256px;
+  height: 255px;
   display: flex;
   justify-content: center;
   align-items: center;

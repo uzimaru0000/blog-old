@@ -14,9 +14,11 @@ export default () => {
 
   return (
     <Wrapper>
-      {entries.map(x => (
-        <Entry key={x.id} {...x} isExtend={false} />
-      ))}
+      {entries
+        .sort((a, b) => b.date.getTime() - a.date.getTime())
+        .map(x => (
+          <Entry key={x.id} {...x} isExtend={false} />
+        ))}
     </Wrapper>
   );
 };

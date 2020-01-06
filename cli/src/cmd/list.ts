@@ -22,7 +22,11 @@ export default {
         }),
       });
 
-      console.log('\n' + selected.content);
+      console.log(`
+id: ${selected.id}
+
+${selected.content}
+`);
     } catch (e) {
       console.log(e);
     }
