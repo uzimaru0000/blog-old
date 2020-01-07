@@ -4,6 +4,14 @@
     {
       "src": "dist/**",
       "use": "@now/static"
+    },
+    {
+      "src": "api/dist/main.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "share/dist/main.js",
+      "use": "@now/node"
     }
   ],
   "routes": [
@@ -24,8 +32,22 @@
       "dest": "dist/img/$1"
     },
     {
+      "src": "/api/(.*)",
+      "dest": "api/dist/main.js"
+    },
+    {
+      "src": "/share/(.*)",
+      "dest": "share/dist/main.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "dist/index.html"
     }
-  ]
+  ],
+  "env": {
+    "FAUNA_SECRET_KEY": "@fauna-secret-key",
+    "SALT": "@password-salt",
+    "TOKEN_SECRET": "@token-secret",
+    "AMOUNT": "@amount"
+  }
 }

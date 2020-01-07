@@ -3,7 +3,7 @@ import FormData from 'form-data';
 import { Entry, entryEncoder, entryWithID } from '../../common/model';
 import { array, object, string } from '@mojotech/json-type-validation';
 
-const endpoint = 'https://blog.api.uzimaru.com';
+const endpoint = 'https://blog.uzimaru.com/api';
 const imgurEndpoint = 'https://api.imgur.com/3/image';
 
 export const getEntries = () =>

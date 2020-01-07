@@ -1,5 +1,5 @@
 import micro, { send } from 'micro';
-import { router, get, post, patch, del } from 'microrouter';
+import { router, get, post, patch, del, withNamespace } from 'microrouter';
 import { Handler } from './handler';
 import { Account, Entry } from './Repository';
 import { verifying } from './middleware';
@@ -14,26 +14,29 @@ const authorizer = new Authorizer(
   'sha512',
   Number(process.env.AMOUNT)
 );
-const cors = microCors();
 
-const entryHandler = router(
+const entryHandler = [
   get('/entries', Handler.getEntries(entryRepo)),
   get('/entry/:id', Handler.getEntry(entryRepo)),
   post('/entry', verifying(authorizer)(Handler.createEntry(entryRepo))),
   patch('/entry', verifying(authorizer)(Handler.updateEntry(entryRepo))),
-  del('/entry/:id', verifying(authorizer)(Handler.deleteEntry(entryRepo)))
-);
+  del('/entry/:id', verifying(authorizer)(Handler.deleteEntry(entryRepo))),
+];
 
 const app = router(
-  get('/', () => ({ message: 'server is running' })),
-  post(
-    '/signup',
-    verifying(authorizer)(Handler.createAccount(accountRepo)(authorizer))
-  ),
-  post('/signin', Handler.signin(accountRepo)(authorizer)),
-  entryHandler,
-  get('/*', (_, res) => send(res, 404, { message: 'not found' }))
+  withNamespace('/api')(
+    get('/', () => ({ message: 'server is running' })),
+    post(
+      '/signup',
+      verifying(authorizer)(Handler.createAccount(accountRepo)(authorizer))
+    ),
+    post('/signin', Handler.signin(accountRepo)(authorizer)),
+    ...entryHandler,
+    get('/*', (_, res) => send(res, 404, { message: 'not found' }))
+  )
 );
+
+const cors = microCors();
 
 micro(cors(app)).listen(3000, () => {
   console.log('server is running.');

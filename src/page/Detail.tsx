@@ -32,7 +32,7 @@ export default (props: RouteComponentProps<{ id: string }>) => {
     rootMargin: '-10%',
   });
   const shareLink = entry
-    ? encodeURI(`https://blog.uzimaru.com/entry/${entry.id}`)
+    ? encodeURI(`https://blog.uzimaru.com/share/${entry.id}`)
     : '';
 
   React.useEffect(() => {

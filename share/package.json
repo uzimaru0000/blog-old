@@ -1,0 +1,27 @@
+{
+  "name": "share",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "watch": "parcel watch -t node --bundle-node-modules ./src/main.ts",
+    "build": "parcel build -t node --bundle-node-modules ./src/main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "micro": "^9.3.4",
+    "microrouter": "^3.1.3",
+    "parcel": "^1.12.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/micro": "^7.3.3",
+    "@types/microrouter": "^3.1.1",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4"
+  }
+}
