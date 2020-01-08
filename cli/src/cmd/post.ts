@@ -2,6 +2,7 @@ import { Cmd } from './type';
 import fs from 'fs';
 import { postEntry, uploadImage } from '../api';
 import prompts from 'prompts';
+import ogp from '../ogp';
 
 export default (token: string) =>
   ({
@@ -31,12 +32,17 @@ export default (token: string) =>
           },
         ]);
 
+        const ogpImage = await ogp(value.title);
+
         const res = await postEntry(token, {
           title: value.title,
           content,
           date: new Date(),
           tags: value.tags,
           image: await uploadImage('f1d7dba802aa5fd', imageBuf).then(
+            x => x.data.link
+          ),
+          ogp: await uploadImage('f1d7dba802aa5fd', ogpImage).then(
             x => x.data.link
           ),
         }).then(x => x.json());

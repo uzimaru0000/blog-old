@@ -6,8 +6,8 @@
     "blog": "./bin/run.js"
   },
   "scripts": {
-    "watch": "parcel watch -t node --bundle-node-modules ./src/main.ts",
-    "build": "parcel build -t node --bundle-node-modules ./src/main.ts",
+    "watch": "parcel watch -t node ./src/main.ts",
+    "build": "parcel build -t node ./src/main.ts",
     "start": "node ./dist/main.js"
   },
   "keywords": [],
@@ -19,11 +19,13 @@
     "form-data": "^3.0.0",
     "node-fetch": "^2.6.0",
     "parcel": "^1.12.4",
-    "prompts": "^2.3.0"
+    "prompts": "^2.3.0",
+    "sharp": "^0.23.4"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
     "@types/node-fetch": "^2.5.4",
-    "@types/prompts": "^2.0.3"
+    "@types/prompts": "^2.0.3",
+    "@types/sharp": "^0.23.1"
   }
 }

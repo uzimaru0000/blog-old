@@ -1,7 +1,6 @@
 import {
   object,
   string,
-  optional,
   number,
   array,
   succeed,
@@ -24,6 +23,7 @@ export interface Entry {
   tags: string[];
   image: string;
   date: Date;
+  ogp: string;
 }
 
 export const account = object({
@@ -45,6 +45,7 @@ export const entry = object({
   tags: array(string()),
   image: string(),
   date: number().map(x => new Date(x)),
+  ogp: string(),
 });
 
 export const entryEncoder = (entry: Entry) => ({
