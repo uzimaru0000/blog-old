@@ -81,7 +81,7 @@ export default (props: RouteComponentProps<{ id: string }>) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background: var(--color-white);
+  background: var(--color-base);
 `;
 
 const InnerWrapper = styled.div`
@@ -99,8 +99,8 @@ const InnerWrapper = styled.div`
 const CatchUp = styled.div<{ image: string; isBlur: boolean }>`
   position: sticky;
   top: 0;
-  z-index: -1;
   width: 100vw;
+  z-index: -1;
   height: calc(100vh - 64px);
   background: ${({ image }) =>
     image

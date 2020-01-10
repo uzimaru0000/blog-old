@@ -6,7 +6,7 @@ import { H1 } from '../base/Typography';
 export default () => (
   <Wrapper>
     <H1>Not Found...</H1>
-    <Egg width={160} color={css['Black50']} />
+    <Egg width={160} color={'var(--color-text-50)'} />
   </Wrapper>
 );
 

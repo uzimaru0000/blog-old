@@ -1,7 +1,7 @@
 import { entryWithID } from '../common/model';
 import { array } from '@mojotech/json-type-validation';
 
-const endpoint = '/api';
+const endpoint = 'https://blog.uzimaru.com/api';
 
 const guard = (x: Response) => {
   if (x.ok) {

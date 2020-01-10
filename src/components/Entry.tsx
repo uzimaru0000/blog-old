@@ -59,7 +59,7 @@ const Wrapper = styled.div<{ isExtend?: boolean }>`
     media.lessThan('medium')`
     width: 90%;
     margin: 16px auto;
-    box-shadow: 0 0 4px 0 var(--color-black-50);
+    box-shadow: 0 0 4px 0 var(--color-text-50);
     border-radius: 16px;
   `}
 `;
@@ -75,7 +75,7 @@ const Title = styled(H1)`
 `;
 
 const Date = styled(H6)`
-  color: var(--color-black-50);
+  color: var(--color-text-50);
   padding-left: 40px;
 `;
 
@@ -113,10 +113,11 @@ const ReadMoreWrapper = styled.div`
 
 const ReadMore = styled(H5)`
   position: relative;
-  color: var(--color-black);
+  color: var(--color-text);
   border: 1px solid var(--color-primary);
   padding: 8px 32px;
   text-decoration: none;
+  z-index: 1;
 
   &::after {
     content: '';
@@ -136,7 +137,7 @@ const ReadMore = styled(H5)`
   }
 
   &:hover {
-    color: var(--color-white);
+    color: var(--color-base);
   }
 
   & *:first-child {

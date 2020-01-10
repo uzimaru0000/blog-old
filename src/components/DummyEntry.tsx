@@ -39,7 +39,7 @@ const Wrapper = styled.div<{ isExtend?: boolean }>`
     media.lessThan('medium')`
     width: 90%;
     margin: 16px auto;
-    box-shadow: 0 0 4px 0 var(--color-black-50);
+    box-shadow: 0 0 4px 0 var(--color-text-50);
     border-radius: 16px;
   `}
 `;
@@ -60,7 +60,7 @@ const Title = styled(H1)`
     display: block;
     width: 100%;
     height: 100%;
-    background-color: var(--color-black-25);
+    background-color: var(--color-text-25);
   }
 
   &::after {
@@ -71,7 +71,7 @@ const Title = styled(H1)`
     display: block;
     width: 0;
     height: 100%;
-    background-color: var(--color-black-25);
+    background-color: var(--color-text-25);
     animation: loading 1s ease infinite;
   }
 
@@ -91,14 +91,14 @@ const Date = styled(H6)`
   display: inline-block;
   width: 25%;
   height: 1.5rem;
-  background: var(--color-black-25);
+  background: var(--color-text-25);
   margin: 0.5rem 0 0 40px;
 
   &:before {
     content: '';
     display: block;
     height: 100%;
-    background-color: var(--color-black-25);
+    background-color: var(--color-text-25);
     animation: loading 1s ease infinite;
   }
 
@@ -123,14 +123,14 @@ const Tags = styled.div`
   & div {
     width: 5rem;
     height: 1.5rem;
-    background: var(--color-black-25);
+    background: var(--color-text-25);
     margin-right: 8px;
 
     &::before {
       content: '';
       display: block;
       height: 100%;
-      background-color: var(--color-black-25);
+      background-color: var(--color-text-25);
       animation: loading 1s ease infinite;
     }
   }
@@ -157,14 +157,14 @@ const Content = styled.div`
 const Line = styled.div<{ width?: string }>`
   width: ${({ width }) => width || '100%'};
   height: 1.5rem;
-  background-color: var(--color-black-25);
+  background-color: var(--color-text-25);
   margin-bottom: 0.5rem;
 
   &::before {
     content: '';
     display: block;
     height: 100%;
-    background-color: var(--color-black-25);
+    background-color: var(--color-text-25);
     animation: loading 1s ease infinite;
   }
   @keyframes loading {

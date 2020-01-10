@@ -15,16 +15,22 @@ export default () => {
 
   return (
     <Wrapper>
-      {entries.length === 0
-        ? [...Array(3)].map(_ => <DummyEntry />)
-        : entries
-            .sort((a, b) => b.date.getTime() - a.date.getTime())
-            .map(x => <Entry key={x.id} {...x} isExtend={false} />)}
+      <InnerWrapper>
+        {entries.length === 0
+          ? [...Array(3)].map(_ => <DummyEntry />)
+          : entries
+              .sort((a, b) => b.date.getTime() - a.date.getTime())
+              .map(x => <Entry key={x.id} {...x} isExtend={false} />)}
+      </InnerWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  background-color: var(--color-base);
+`;
+
+const InnerWrapper = styled.div`
   ${media.greaterThan('medium')`
     margin: 0 auto;
     width: 90%;

@@ -17,16 +17,12 @@ const Wrapper = styled.header`
   padding-left: 50px;
   width: 100vw;
   height: 64px;
-  box-shadow: 0 1px 2px var(--color-black-25);
-  background: var(--color-white);
+  background: var(--color-base);
+  border-bottom: 1px solid var(--color-text-50);
 `;
 
 const LinkToTop = styled(Link)`
-  font-size: 1em;
-  color: var(--color-black);
-  text-decoration: none;
-
   &:hover {
-    color: var(--color-black-75);
+    color: var(--color-text-75);
   }
 `;

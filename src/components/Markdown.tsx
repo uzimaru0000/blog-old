@@ -56,26 +56,26 @@ const Heading = (level: number) => (props: React.PropsWithChildren<{}>) => {
 };
 
 const MarkdownH1 = styled(H1)`
-  border-bottom: 2px solid var(--color-black-25);
+  border-bottom: 2px solid var(--color-text-25);
 `;
 
 const MarkdownH2 = styled(H2)`
-  border-bottom: 1px solid var(--color-black-25);
+  border-bottom: 1px solid var(--color-text-25);
 `;
 
 const InlineCode = styled.code`
-  background: var(--color-black-5);
+  background: var(--color-text-5);
   padding: 2px 4px;
   border-radius: 8px;
 `;
 
 const Blockquote = styled.blockquote`
-  border-left: 4px solid var(--color-black-25);
+  border-left: 4px solid var(--color-text-25);
   margin-left: 0;
   padding-left: 16px;
 
   & * {
-    color: var(--color-black-50);
+    color: var(--color-text-50);
   }
 `;
 
@@ -99,7 +99,7 @@ const Hr = styled.hr`
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0) 5%,
-    var(--color-black-50) 15% 85%,
+    var(--color-text-50) 15% 85%,
     rgba(0, 0, 0, 0) 95%
   );
   border: none;

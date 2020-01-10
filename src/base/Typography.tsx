@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 const master = css`
   margin: 0;
   padding: 0;
-  color: var(--color-black);
+  color: var(--color-text);
 `;
 
 export const H1 = styled.h1`

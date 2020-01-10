@@ -11,7 +11,7 @@ export default () => (
     <Header>にわとりになる日まで</Header>
     <Route exact path="/" component={Top} />
     <Route path="/entry/:id" component={Detail} />
-    <Route component={NotFound} />
+    <Route path="/notfound" component={NotFound} />
     <Footer />
   </BrowserRouter>
 );
