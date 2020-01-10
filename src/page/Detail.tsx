@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { WithID, Entry as EntryType } from '../../common/model';
 import { getEntry } from '../api';
 import Share from '../components/Share';
-import { IconName } from '@fortawesome/fontawesome-svg-core';
+import DummyEntry from '../components/DummyEntry';
 
 const useIntersection = (
   dom: HTMLDivElement | null,
@@ -37,34 +37,42 @@ export default (props: RouteComponentProps<{ id: string }>) => {
 
   React.useEffect(() => {
     if (!props.match.params.id) return;
-    getEntry(props.match.params.id).then(x => setEntry(x));
+    getEntry(props.match.params.id)
+      .then(x => setEntry(x))
+      .catch(_ => props.history.replace('/notfound'));
   }, [props.match.params.id, setEntry]);
 
   return (
     <>
       <CatchUp image={entry && entry.image} isBlur={isIntersection} />
       <Wrapper ref={entryDOM}>
-        <InnerWrapper>
-          {entry && <Entry {...entry} isExtend={true} />}
-        </InnerWrapper>
-        <ShareWrapper>
-          <Share
-            icon={['fab', 'facebook']}
-            url={`https://www.facebook.com/sharer/sharer.php?u=${shareLink}`}
-            color="#3B5998"
-          />
-          <Share
-            icon={['fab', 'twitter']}
-            url={`https://twitter.com/intent/tweet?url=${shareLink}&text=${entry &&
-              entry.title}`}
-            color="#1DA1F2"
-          />
-          <Share
-            icon={['fab', 'get-pocket']}
-            url={`https://getpocket.com/save?${shareLink}`}
-            color="#EE4056"
-          />
-        </ShareWrapper>
+        {entry ? (
+          <>
+            <InnerWrapper>
+              {entry && <Entry {...entry} isExtend={true} />}
+            </InnerWrapper>
+            <ShareWrapper>
+              <Share
+                icon={['fab', 'facebook']}
+                url={`https://www.facebook.com/sharer/sharer.php?u=${shareLink}`}
+                color="#3B5998"
+              />
+              <Share
+                icon={['fab', 'twitter']}
+                url={`https://twitter.com/intent/tweet?url=${shareLink}&text=${entry &&
+                  entry.title}`}
+                color="#1DA1F2"
+              />
+              <Share
+                icon={['fab', 'get-pocket']}
+                url={`https://getpocket.com/save?${shareLink}`}
+                color="#EE4056"
+              />
+            </ShareWrapper>
+          </>
+        ) : (
+          <DummyEntry isExtend={true} />
+        )}
       </Wrapper>
     </>
   );
@@ -94,7 +102,10 @@ const CatchUp = styled.div<{ image: string; isBlur: boolean }>`
   z-index: -1;
   width: 100vw;
   height: calc(100vh - 64px);
-  background: ${({ image }) => `url(${image})`};
+  background: ${({ image }) =>
+    image
+      ? `url(${image})`
+      : 'linear-gradient(45deg, var(--color-primary), var(--color-accent))'};
   background-size: cover;
   ${({ isBlur }) =>
     isBlur &&

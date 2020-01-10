@@ -48,6 +48,16 @@ export const entry = object({
   ogp: string(),
 });
 
+export const entryWithID = object({
+  id: string(),
+  title: string(),
+  content: string(),
+  tags: array(string()),
+  image: string(),
+  date: number().map(x => new Date(x)),
+  ogp: string(),
+});
+
 export const entryEncoder = (entry: Entry) => ({
   ...entry,
   date: entry.date.getTime(),
