@@ -17,7 +17,7 @@ export default {
           return {
             title: x.title,
             value: x,
-            description: dateFormat(x.date),
+            description: dateFormat(new Date(x.date)),
           };
         }),
       });
