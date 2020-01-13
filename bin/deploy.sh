@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-now
+now --prod
 
 now alias ${pbpaste} blog.uzimaru.com

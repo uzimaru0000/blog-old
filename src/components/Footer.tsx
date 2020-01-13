@@ -4,7 +4,7 @@ import Icon from './Icon';
 
 export default () => (
   <Wrapper>
-    <a href="https://uzimaru.com">
+    <a href="https://uzimaru.com" aria-label="portfolio site">
       <Icon />
     </a>
   </Wrapper>

@@ -8,12 +8,12 @@ interface State {
 }
 
 class GetEntryAction {
-  type: 'GetEntry';
+  type: 'GetEntry' = 'GetEntry';
   constructor(public entry: WithID<Entry>) {}
 }
 
 class GetEntriesAction {
-  type: 'GetEntries';
+  type: 'GetEntries' = 'GetEntries';
   constructor(public entries: WithID<Entry>[]) {}
 }
 
@@ -40,6 +40,8 @@ const reducer = (state: State, action: Action) => {
         {}
       );
       return { ...state, ...entries };
+    default:
+      return state;
   }
 };
 
@@ -55,7 +57,4 @@ export const GetEntries = async () => {
   return new GetEntriesAction(entries);
 };
 
-export default () => {
-  const [state, dispatcher] = React.useReducer(reducer, init());
-  return React.createContext<UseReducer>({ state, dispatcher });
-};
+export default () => React.useReducer(reducer, init());

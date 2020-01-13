@@ -19,7 +19,7 @@ export default (
   const head = renderToString(
     <Head preData={preData} style={style} ogp={ogp} />
   );
-  return `<html>${head}${body}</html>`;
+  return `<!DOCTYPE html><html lang="ja">${head}${body}</html>`;
 };
 
 const Skeleton = ({ children }: React.PropsWithChildren<{}>) => {
@@ -44,6 +44,10 @@ const Head = ({
   <head>
     <title>にわとりになる日まで</title>
     <meta charSet="utf-8" />
+    <meta
+      name="Description"
+      content="うじまるのブログです。技術的なことをメインに書いていきます。"
+    />
     <meta property="og:title" content="にわとりになる日まで" />
     <meta
       property="og:image"
@@ -90,6 +94,6 @@ const Body = ({
 }: React.PropsWithChildren<{ isLoadJS: boolean }>) => (
   <body>
     <div id="main">{children}</div>
-    {isLoadJS && <script src="/js/main.js" />}
+    {isLoadJS && <script defer src="/js/main.js" />}
   </body>
 );

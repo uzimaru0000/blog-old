@@ -1,6 +1,7 @@
 import * as React from 'react';
 import micro, { send } from 'micro';
 import { router, get } from 'microrouter';
+import compress from 'micro-compress';
 import view from './View';
 import Top from './containers/Top';
 import Detail from './containers/Detail';
@@ -13,7 +14,10 @@ const app = router(
   get('/', async (_, res) => {
     const entries = await getEntries();
     const preData = entries.reduce(
-      (acc, { id, ...entry }) => ({ ...acc, [id]: entryEncoder(entry) }),
+      (acc, { id, ...entry }) => ({
+        ...acc,
+        [id]: entryEncoder({ ...entry, content: entry.content.slice(0, 255) }),
+      }),
       {}
     );
 
@@ -44,6 +48,6 @@ const app = router(
   })
 );
 
-micro(app).listen(1234, () => {
+micro(compress(app)).listen(1234, () => {
   console.log('listen');
 });

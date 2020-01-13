@@ -18,11 +18,11 @@
       "use": "@now/static"
     },
     {
-      "src": "api/dist/main.js",
-      "use": "@now/node"
+      "src": "dist/robots.txt",
+      "use": "@now/static"
     },
     {
-      "src": "share/dist/main.js",
+      "src": "api/dist/main.js",
       "use": "@now/node"
     }
   ],
@@ -30,6 +30,10 @@
     {
       "src": "/favicon.ico",
       "dest": "dist/favicon.ico"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "dist/robots.txt"
     },
     {
       "src": "/js/(.*)",
@@ -46,10 +50,6 @@
     {
       "src": "/api/(.*)",
       "dest": "api/dist/main.js"
-    },
-    {
-      "src": "/share/(.*)",
-      "dest": "share/dist/main.js"
     },
     {
       "src": "/(.*)",
