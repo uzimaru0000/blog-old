@@ -10,7 +10,7 @@ export default () => (
   </Wrapper>
 );
 
-const Wrapper = styled.div`
+const Wrapper = styled.footer`
   width: 100vw;
   height: 255px;
   display: flex;

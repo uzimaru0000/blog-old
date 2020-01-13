@@ -4,14 +4,28 @@ import Footer from './components/Footer';
 import Top from './page/Top';
 import Detail from './page/Detail';
 import NotFound from './page/NotFound';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import createReducer from './store';
 
-export default () => (
-  <BrowserRouter>
-    <Header>にわとりになる日まで</Header>
-    <Route exact path="/" component={Top} />
-    <Route path="/entry/:id" component={Detail} />
-    <Route path="/notfound" component={NotFound} />
-    <Footer />
-  </BrowserRouter>
-);
+export default () => {
+  const ReducerContext = createReducer();
+
+  return (
+    <ReducerContext.Consumer>
+      {ctx => (
+        <>
+          <Header>にわとりになる日まで</Header>
+          <Switch>
+            <Route exact path="/" render={() => <Top {...ctx} />} />
+            <Route
+              path="/entry/:id"
+              render={rProps => <Detail {...rProps} {...ctx} />}
+            />
+            <Route path="/*" component={NotFound} />
+          </Switch>
+          <Footer />
+        </>
+      )}
+    </ReducerContext.Consumer>
+  );
+};

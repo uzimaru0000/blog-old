@@ -1,9 +1,10 @@
-import { entryWithID } from '../common/model';
+import { entryWithID } from '../../common/model';
 import { array } from '@mojotech/json-type-validation';
+import * as node from 'node-fetch';
 
-const endpoint = 'https://blog.uzimaru.com/api';
+type Res = Response | node.Response;
 
-const guard = (x: Response) => {
+const guard = (x: Res) => {
   if (x.ok) {
     return x;
   } else {
@@ -11,15 +12,15 @@ const guard = (x: Response) => {
   }
 };
 
-export const getEntries = () => {
-  return fetch(`${endpoint}/entries`)
+export const getEntries = (res: Promise<Res>) => {
+  return res
     .then(guard)
     .then(x => x.json())
     .then(array(entryWithID).runPromise);
 };
 
-export const getEntry = (id: string) => {
-  return fetch(`${endpoint}/entry/${id}`)
+export const getEntry = (res: Promise<Res>) => {
+  return res
     .then(guard)
     .then(x => x.json())
     .then(entryWithID.runPromise);

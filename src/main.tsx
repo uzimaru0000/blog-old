@@ -1,15 +1,12 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import './icon';
+import { BrowserRouter } from 'react-router-dom';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  faTwitter,
-  faFacebook,
-  faGetPocket,
-} from '@fortawesome/free-brands-svg-icons';
-
-library.add(faAngleRight, faTwitter, faFacebook, faGetPocket);
-
-ReactDOM.render(<App />, document.getElementById('main'));
+ReactDOM.hydrate(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('main')
+);

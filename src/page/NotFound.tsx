@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { css } from '../style/color';
 import { H1 } from '../base/Typography';
 
 export default () => (
@@ -16,6 +15,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--color-base);
 
   & * {
     margin-bottom: 1rem;

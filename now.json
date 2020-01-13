@@ -2,7 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/**",
+      "src": "dist/server.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "dist/js/*",
+      "use": "@now/static"
+    },
+    {
+      "src": "dist/css/*",
+      "use": "@now/static"
+    },
+    {
+      "src": "dist/favicon.ico",
       "use": "@now/static"
     },
     {
@@ -41,7 +53,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "dist/index.html"
+      "dest": "dist/server.js"
     }
   ],
   "env": {
