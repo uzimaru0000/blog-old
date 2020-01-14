@@ -4,6 +4,7 @@ import { dom } from '@fortawesome/fontawesome-svg-core';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ServerStyleSheet } from 'styled-components';
+import GlobalCSS from './style/global';
 
 export default (
   element: React.ReactElement,
@@ -62,7 +63,6 @@ const Head = ({
       content={ogp || 'https://i.imgur.com/cohWQUU.png'}
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/css/global.css" />
     <link rel="icon" href="/favicon.ico" />
     <script
       async
@@ -95,5 +95,6 @@ const Body = ({
   <body>
     <div id="main">{children}</div>
     {isLoadJS && <script defer src="/js/main.js" />}
+    <GlobalCSS />
   </body>
 );
