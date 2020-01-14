@@ -2,58 +2,46 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/server.js",
+      "src": "main/dist/index.js",
       "use": "@now/node"
     },
     {
-      "src": "dist/js/*",
+      "src": "main/dist/js/*",
       "use": "@now/static"
     },
     {
-      "src": "dist/css/*",
+      "src": "public/*",
       "use": "@now/static"
     },
     {
-      "src": "dist/favicon.ico",
-      "use": "@now/static"
-    },
-    {
-      "src": "dist/robots.txt",
-      "use": "@now/static"
-    },
-    {
-      "src": "api/dist/main.js",
+      "src": "api/dist/index.js",
       "use": "@now/node"
     }
   ],
   "routes": [
     {
       "src": "/favicon.ico",
-      "dest": "dist/favicon.ico"
+      "dest": "public/favicon.ico"
     },
     {
       "src": "/robots.txt",
-      "dest": "dist/robots.txt"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "dist/js/$1"
-    },
-    {
-      "src": "/css/(.*)",
-      "dest": "dist/css/$1"
+      "dest": "public/robots.txt"
     },
     {
       "src": "/img/(.*)",
-      "dest": "dist/img/$1"
+      "dest": "public/img/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "main/dist/js/$1"
     },
     {
       "src": "/api/(.*)",
-      "dest": "api/dist/main.js"
+      "dest": "api/dist/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "dist/server.js"
+      "dest": "main/dist/index.js"
     }
   ],
   "env": {

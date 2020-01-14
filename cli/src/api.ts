@@ -1,15 +1,16 @@
 import fetch from 'node-fetch';
 import FormData from 'form-data';
-import { Entry, entryEncoder, entryWithID } from '../../common/model';
-import { array, object, string } from '@mojotech/json-type-validation';
+import { Entry, entryEncoder } from '../../common/model';
+import { object, string } from '@mojotech/json-type-validation';
+import * as API from '../../common/api';
 
 const endpoint = 'https://blog.uzimaru.com/api';
 const imgurEndpoint = 'https://api.imgur.com/3/image';
 
-export const getEntries = () =>
-  fetch(`${endpoint}/entries`)
-    .then(x => x.json())
-    .then(array(entryWithID).runPromise);
+export const getEntries = () => API.getEntries(fetch(`${endpoint}/entries`));
+
+export const getEntry = (id: string) =>
+  API.getEntry(fetch(`${endpoint}/entry/${id}`));
 
 export const postEntry = (token: string, entry: Entry) =>
   fetch(`${endpoint}/entry`, {
@@ -19,11 +20,6 @@ export const postEntry = (token: string, entry: Entry) =>
     },
     body: JSON.stringify(entryEncoder(entry)),
   });
-
-export const getEntry = (id: string) =>
-  fetch(`${endpoint}/entry/${id}`)
-    .then(x => x.json())
-    .then(entryWithID.runPromise);
 
 export const login = (id: string, password: string) =>
   fetch(`${endpoint}/signin`, {

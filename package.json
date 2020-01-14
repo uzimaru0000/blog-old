@@ -2,14 +2,21 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "",
+  "bin": {
+    "blog": "./bin/run.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel serve ./src/index.html",
-    "watch:server": "parcel watch -t node --bundle-node-modules ./src/server.tsx",
-    "watch:client": "parcel watch -d dist/js ./src/main.tsx",
-    "build:client": "parcel build --no-source-maps -d dist/js ./src/main.tsx && parcel build --no-source-maps -d dist/css ./src/style/global.scss && cp ./public/* ./dist/",
-    "build:server": "parcel build -t node --bundle-node-modules --no-source-maps -d dist ./src/server.tsx",
-    "build": "rm -r dist && npm run build:client && npm run build:server"
+    "start": "now dev -d",
+    "watch:server": "parcel watch -t node --bundle-node-modules -d ./main/dist ./main/src/server/index.tsx",
+    "watch:client": "parcel watch -d ./main/dist/js ./main/src/client/index.tsx",
+    "watch:api": "parcel watch -t node --bundle-node-modules -d ./api/dist ./api/src/index.ts",
+    "build:server": "parcel build -t node --bundle-node-modules --no-source-maps -d ./main/dist ./main/src/server/index.tsx",
+    "build:client": "parcel build -d ./main/dist/js --no-source-maps ./main/src/client/index.tsx",
+    "build:api": "parcel build -t node --bundle-node-modules --no-source-maps -d ./api/dist ./api/src/index.ts",
+    "build:cli": "parcel build -t node --no-source-maps -d ./cli/dist ./cli/src/index.ts",
+    "build": "npm run build:server && npm run build:client && npm run build:api",
+    "deploy": "./bin/deploy.sh"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +30,15 @@
     "@types/react-router-dom": "^5.1.3",
     "@types/react-syntax-highlighter": "^11.0.4",
     "@types/styled-components": "^4.4.1",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/micro-cors": "^0.1.0",
+    "@types/commander": "^2.12.2",
+    "@types/prompts": "^2.0.3",
+    "@types/sharp": "^0.23.1",
     "parcel": "^1.12.4",
     "sass": "^1.24.2",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "now": "^16.7.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
@@ -43,6 +56,13 @@
     "react-router-dom": "^5.1.2",
     "react-syntax-highlighter": "^9.0.1",
     "styled-components": "^4.4.1",
-    "styled-media-query": "^2.1.2"
+    "styled-media-query": "^2.1.2",
+    "faunadb": "^2.10.0",
+    "jsonwebtoken": "^8.5.1",
+    "micro-cors": "^0.1.1",
+    "commander": "^4.0.1",
+    "form-data": "^3.0.0",
+    "prompts": "^2.3.0",
+    "sharp": "^0.23.4"
   }
 }
