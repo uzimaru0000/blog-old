@@ -60,7 +60,7 @@ export const entryWithID = object({
 
 export const entryEncoder = (entry: Entry) => ({
   ...entry,
-  date: entry.date.getTime(),
+  date: entry.date.getTime() - entry.date.getTimezoneOffset() * 60 * 1000,
 });
 
 export const withID = <T>(id: string) => (data: T) => ({

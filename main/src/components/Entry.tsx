@@ -45,10 +45,10 @@ export default (props: Props) => (
 );
 
 const dateFormat = (date: Date) => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getUTCFullYear();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
   const day = date
-    .getDate()
+    .getUTCDate()
     .toString()
     .padStart(2, '0');
   return `${year} / ${month} / ${day}`;
@@ -60,10 +60,13 @@ const Wrapper = styled.div<{ isExtend?: boolean }>`
   ${props =>
     !props.isExtend &&
     media.lessThan('medium')`
-    width: 90%;
-    margin: 16px auto;
     box-shadow: 0 0 4px 0 var(--color-text-50);
     border-radius: 16px;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   `}
 `;
 

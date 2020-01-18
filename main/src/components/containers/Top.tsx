@@ -36,5 +36,6 @@ const InnerWrapper = styled.div`
 
   ${media.lessThan('medium')`
     width: 100%;
+    padding: 16px;
   `}
 `;
