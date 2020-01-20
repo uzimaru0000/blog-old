@@ -1,8 +1,7 @@
 import * as API from '../../../common/api';
 import fetch from 'node-fetch';
 
-// const endpoint = 'https://blog.uzimaru.com/api';
-const endpoint = 'http://localhost:3000/api';
+const endpoint = 'https://blog.uzimaru.com/api';
 
 export const getEntries = () =>
   API.getEntries(fetch(`${endpoint}/entries`)).then(x => x.entries);
