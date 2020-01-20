@@ -4,7 +4,9 @@ import * as API from './api';
 import { dict } from '@mojotech/json-type-validation';
 
 interface State {
-  [id: string]: Entry;
+  entries: { [id: string]: Entry };
+  after?: number;
+  isLoading: boolean;
 }
 
 class GetEntryAction {
@@ -14,32 +16,42 @@ class GetEntryAction {
 
 class GetEntriesAction {
   type: 'GetEntries' = 'GetEntries';
-  constructor(public entries: WithID<Entry>[]) {}
+  constructor(public response: { after?: number; entries: WithID<Entry>[] }) {}
 }
 
-type Action = GetEntryAction | GetEntriesAction;
+class SetIsLoadingAction {
+  type: 'SetIsLoading' = 'SetIsLoading';
+}
+
+type Action = GetEntryAction | GetEntriesAction | SetIsLoadingAction;
 
 const init = () => {
   const initState = document.getElementById('init-state');
-  if (!initState) {
-    return {};
+  if (!initState || !initState.dataset.state) {
+    return { entries: {}, isLoading: false };
   }
 
   const json = JSON.parse(initState.dataset.state);
-  return dict(entry).runWithException(json);
+  return { entries: dict(entry).runWithException(json), isLoading: false };
 };
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'GetEntry':
       const { id, ...entry } = action.entry;
-      return { ...state, [id]: entry } as State;
+      return {
+        ...state,
+        entries: { ...state.entries, [id]: entry },
+        isLoading: false,
+      } as State;
     case 'GetEntries':
-      const entries = action.entries.reduce<State>(
+      const entries = action.response.entries.reduce<{ [id: string]: Entry }>(
         (acc, { id, ...entry }) => ({ ...acc, [id]: entry }),
-        {}
+        state.entries
       );
-      return { ...state, ...entries };
+      return { after: action.response.after, entries, isLoading: false };
+    case 'SetIsLoading':
+      return { ...state, isLoading: true };
     default:
       return state;
   }
@@ -52,9 +64,11 @@ export const GetEntry = async (id: string) => {
   return new GetEntryAction(entry);
 };
 
-export const GetEntries = async () => {
-  const entries = await API.getEntries();
+export const GetEntries = async (after?: number) => {
+  const entries = await API.getEntries(after);
   return new GetEntriesAction(entries);
 };
+
+export const SetIsLoading = () => new SetIsLoadingAction();
 
 export default () => React.useReducer(reducer, init());

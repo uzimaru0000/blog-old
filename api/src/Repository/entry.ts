@@ -1,11 +1,26 @@
-import { Entry, entry, WithID, withID, entryEncoder } from '../model';
+import {
+  Entry,
+  entry,
+  WithID,
+  withID,
+  entryEncoder,
+} from '../../../common/model';
 import faunadb, { query as q } from 'faunadb';
 import { FaunaResponseDecoder } from '../utils';
-import { array } from '@mojotech/json-type-validation';
+import {
+  array,
+  object,
+  number,
+  tuple,
+  optional,
+} from '@mojotech/json-type-validation';
 
 export interface Repository {
   create(data: Entry): Promise<string>;
-  getAll(): Promise<WithID<Entry>[]>;
+  getAll(
+    ts?: number,
+    size?: number
+  ): Promise<{ after?: number; entries: WithID<Entry>[] }>;
   get(id: string): Promise<WithID<Entry>>;
   update(data: WithID<Entry>): Promise<void>;
   delete(id: string): Promise<void>;
@@ -33,16 +48,25 @@ export class FaunaRepository implements Repository {
       .then(x => x.id);
   }
 
-  async getAll() {
+  async getAll(ts?: number, size: number = 3) {
     return this.client
       .query(
         q.Map(
-          q.Paginate(q.Match(q.Index('all_entry'))),
-          q.Lambda('x', q.Get(q.Var('x')))
+          q.Paginate(q.Match(q.Index('entry_sorted_by_date')), {
+            size: size,
+            after: ts,
+          }),
+          q.Lambda(['_', 'ref'], q.Get(q.Var('ref')))
         )
       )
-      .then(x => (x as any).data)
-      .then(array(this.entryWithID).runPromise);
+      .then(x => x as any)
+      .then(
+        object({
+          after: optional(tuple([number(), object(), object()]).map(x => x[0])),
+          data: array(this.entryWithID),
+        }).runPromise
+      )
+      .then(({ after, data }) => ({ after, entries: data }));
   }
 
   async get(id: string) {

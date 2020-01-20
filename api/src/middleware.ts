@@ -11,9 +11,7 @@ export const verifying = (authorizer: Authorizer) => (
 ) => async (req: ServerRequest, res: ServerResponse) => {
   const rawToken = req.headers.authorization;
 
-  console.log(rawToken);
-
-  if (!/^Bearer +/.test(rawToken)) {
+  if (!rawToken || !/^Bearer +/.test(rawToken)) {
     send(res, 401, { message: 'unauthorized' });
     return;
   }

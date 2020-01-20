@@ -1,7 +1,7 @@
 import * as crypto from 'crypto';
 import { object, string } from '@mojotech/json-type-validation';
 import { sign, verify } from 'jsonwebtoken';
-import { Account } from './model';
+import { Account } from '../../common/model';
 
 export interface AuthData {
   id: string;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import micro, { send } from 'micro';
+import micro, { send, sendError } from 'micro';
 import { router, get } from 'microrouter';
 import compress from 'micro-compress';
 import view from './View';
@@ -11,17 +11,26 @@ import { entryEncoder } from '../../../common/model';
 import '../style/icon';
 
 const app = router(
-  get('/', async (_, res) => {
-    const entries = await getEntries();
-    const preData = entries.reduce(
-      (acc, { id, ...entry }) => ({
-        ...acc,
-        [id]: entryEncoder({ ...entry, content: entry.content.slice(0, 255) }),
-      }),
-      {}
-    );
+  get('/', async (req, res) => {
+    try {
+      const entries = await getEntries();
+      const preData = entries.reduce(
+        (acc, { id, ...entry }) => ({
+          ...acc,
+          [id]: entryEncoder(entry),
+        }),
+        {}
+      );
 
-    send(res, 200, view(<Top entries={entries} />, preData));
+      send(
+        res,
+        200,
+        view(<Top isLoading={false} entries={entries} />, preData)
+      );
+    } catch (e) {
+      console.error(e);
+      sendError(req, res, {});
+    }
   }),
   get('/entry/:id', async (req, res) => {
     const id = req.params.id;

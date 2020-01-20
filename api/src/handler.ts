@@ -1,6 +1,12 @@
 import { AugmentedRequestHandler, ServerResponse } from 'microrouter';
 import { json, send } from 'micro';
-import { Role, withID, entry, Entry as E, entryEncoder } from './model';
+import {
+  Role,
+  withID,
+  entry,
+  Entry as E,
+  entryEncoder,
+} from '../../common/model';
 import { Repository, Account, Entry } from './Repository';
 import { isDecoderError } from '@mojotech/json-type-validation';
 import faunadb from 'faunadb';
@@ -59,12 +65,14 @@ export namespace Handler {
   };
 
   export const getEntries: WithRepository<Entry.Repository> = repo => async (
-    _,
+    req,
     res
   ) => {
     try {
-      const entries = await repo.getAll();
-      send(res, 200, entries.map(entryEncoder));
+      const ts = Number(req.query.after) || undefined;
+      const size = Number(req.query.size) || undefined;
+      const { after, entries } = await repo.getAll(ts, size);
+      send(res, 200, { after, entries: entries.map(entryEncoder) });
     } catch (e) {
       console.error(e);
       errorHandle(res, e);

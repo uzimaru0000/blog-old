@@ -6,11 +6,13 @@ import { verifying } from './middleware';
 import Authorizer from './authorizer';
 import microCors from 'micro-cors';
 
-const accountRepo = new Account.FaunaRepository(process.env.FAUNA_SECRET_KEY);
-const entryRepo = new Entry.FaunaRepository(process.env.FAUNA_SECRET_KEY);
+const accountRepo = new Account.FaunaRepository(
+  process.env.FAUNA_SECRET_KEY || ''
+);
+const entryRepo = new Entry.FaunaRepository(process.env.FAUNA_SECRET_KEY || '');
 const authorizer = new Authorizer(
-  process.env.SALT,
-  process.env.TOKEN_SECRET,
+  process.env.SALT || '',
+  process.env.TOKEN_SECRET || '',
   'sha512',
   Number(process.env.AMOUNT)
 );

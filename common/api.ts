@@ -1,5 +1,10 @@
 import { entryWithID } from './model';
-import { array } from '@mojotech/json-type-validation';
+import {
+  array,
+  object,
+  number,
+  optional,
+} from '@mojotech/json-type-validation';
 import * as node from 'node-fetch';
 
 type Res = Response | node.Response;
@@ -16,7 +21,10 @@ export const getEntries = (res: Promise<Res>) => {
   return res
     .then(guard)
     .then(x => x.json())
-    .then(array(entryWithID).runPromise);
+    .then(
+      object({ entries: array(entryWithID), after: optional(number()) })
+        .runPromise
+    );
 };
 
 export const getEntry = (res: Promise<Res>) => {

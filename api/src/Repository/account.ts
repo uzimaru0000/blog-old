@@ -1,4 +1,4 @@
-import { Account, account } from '../model';
+import { Account, account } from '../../../common/model';
 import faunadb, { query as q } from 'faunadb';
 import { FaunaResponseDecoder } from '../utils';
 

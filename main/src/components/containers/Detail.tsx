@@ -5,23 +5,7 @@ import media from 'styled-media-query';
 import { WithID, Entry as EntryType } from '../../../../common/model';
 import Share from '../Share';
 import DummyEntry from '../DummyEntry';
-
-const useIntersection = (
-  dom: HTMLDivElement | null,
-  opts?: IntersectionObserverInit
-) => {
-  const [isIntersection, setIntersection] = React.useState(false);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(([target]) => {
-      setIntersection(target.isIntersecting);
-    }, opts);
-    if (dom !== null) observer.observe(dom);
-    return () => dom !== null && observer.unobserve(dom);
-  }, [dom, setIntersection]);
-
-  return isIntersection;
-};
+import { useIntersection } from '../hooks';
 
 export default ({ entry }: { entry: WithID<EntryType> }) => {
   const entryDOM = React.useRef<HTMLDivElement>(null);
