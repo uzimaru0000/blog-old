@@ -69,6 +69,11 @@ export const GetEntries = async (after?: number) => {
   return new GetEntriesAction(entries);
 };
 
+export const GetEntriesWithTag = async (tag: string, after?: number) => {
+  const entries = await API.getEntriesWithTag(tag, after);
+  return new GetEntriesAction(entries);
+};
+
 export const SetIsLoading = () => new SetIsLoadingAction();
 
 export default () => React.useReducer(reducer, init());

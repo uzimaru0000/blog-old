@@ -22,7 +22,7 @@ export default (props: Props) => (
       <Date>{dateFormat(props.date)}</Date>
       <Tags>
         {props.tags.map(x => (
-          <Tag key={x} href={`/tag/${x}`}>
+          <Tag key={x} href={`/tag/${encodeURIComponent(x)}`}>
             {x}
           </Tag>
         ))}

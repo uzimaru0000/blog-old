@@ -7,7 +7,8 @@ import * as API from '../../common/api';
 const endpoint = 'https://blog.uzimaru.com/api';
 const imgurEndpoint = 'https://api.imgur.com/3/image';
 
-export const getEntries = () => API.getEntries(fetch(`${endpoint}/entries`));
+export const getEntries = () =>
+  API.getEntries(fetch(`${endpoint}/entries?size=64`)).then(x => x.entries);
 
 export const getEntry = (id: string) =>
   API.getEntry(fetch(`${endpoint}/entry/${id}`));

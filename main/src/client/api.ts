@@ -7,3 +7,8 @@ export const getEntries = (after?: number) =>
 
 export const getEntry = (id: string) =>
   API.getEntry(fetch(`${endpoint}/entry/${id}`));
+
+export const getEntriesWithTag = (tag: string, after?: number) =>
+  API.getEntries(
+    fetch(`${endpoint}/entries?tag=${tag}${after ? `&after=${after}` : ''}`)
+  );

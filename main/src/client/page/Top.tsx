@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TopContainer from '../../components/containers/Top';
+import ListContainer from '../../components/containers/List';
 import { UseReducer, GetEntries, SetIsLoading } from '../store';
 
 export default (props: UseReducer) => {
@@ -13,7 +13,7 @@ export default (props: UseReducer) => {
   }, []);
 
   return (
-    <TopContainer
+    <ListContainer
       entries={entries}
       isLoading={props.state.isLoading}
       onEnd={

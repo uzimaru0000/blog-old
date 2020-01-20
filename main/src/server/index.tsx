@@ -3,12 +3,13 @@ import micro, { send, sendError } from 'micro';
 import { router, get } from 'microrouter';
 import compress from 'micro-compress';
 import view from './View';
-import Top from '../components/containers/Top';
+import List from '../components/containers/List';
 import Detail from '../components/containers/Detail';
 import NotFound from '../components/containers/NotFound';
-import { getEntries, getEntry } from './api';
+import { getEntries, getEntry, getEntriesWithTag } from './api';
 import { entryEncoder } from '../../../common/model';
 import '../style/icon';
+import Tags from '../components/containers/Tags';
 
 const app = router(
   get('/', async (req, res) => {
@@ -25,7 +26,7 @@ const app = router(
       send(
         res,
         200,
-        view(<Top isLoading={false} entries={entries} />, preData)
+        view(<List isLoading={false} entries={entries} />, preData)
       );
     } catch (e) {
       console.error(e);
@@ -52,7 +53,30 @@ const app = router(
       send(res, 404, view(<NotFound />, {}, false));
     }
   }),
+  get('/tag/:tag', async (req, res) => {
+    try {
+      const tag = req.params.tag;
+      const entries = await getEntriesWithTag(tag);
+      const preData = entries.reduce(
+        (acc, { id, ...entry }) => ({
+          ...acc,
+          [id]: entryEncoder(entry),
+        }),
+        {}
+      );
+
+      send(
+        res,
+        200,
+        view(<List isLoading={false} entries={entries} />, preData)
+      );
+    } catch (e) {
+      console.error(e);
+      send(res, 404, view(<NotFound />, {}, false));
+    }
+  }),
   get('/*', (_, res) => {
+    console.log('not found');
     send(res, 404, view(<NotFound />, {}, false));
   })
 );

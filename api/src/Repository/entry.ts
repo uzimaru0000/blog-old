@@ -22,6 +22,11 @@ export interface Repository {
     size?: number
   ): Promise<{ after?: number; entries: WithID<Entry>[] }>;
   get(id: string): Promise<WithID<Entry>>;
+  getWithTag(
+    tag: string,
+    ts?: number,
+    size?: number
+  ): Promise<{ after?: number; entries: WithID<Entry>[] }>;
   update(data: WithID<Entry>): Promise<void>;
   delete(id: string): Promise<void>;
 }
@@ -59,7 +64,6 @@ export class FaunaRepository implements Repository {
           q.Lambda(['_', 'ref'], q.Get(q.Var('ref')))
         )
       )
-      .then(x => x as any)
       .then(
         object({
           after: optional(tuple([number(), object(), object()]).map(x => x[0])),
@@ -73,6 +77,26 @@ export class FaunaRepository implements Repository {
     return this.client
       .query(q.Get(q.Ref(q.Collection('Entry'), id)))
       .then(x => this.entryWithID.runPromise(x));
+  }
+
+  async getWithTag(tag: string, ts?: number, size: number = 3) {
+    return this.client
+      .query(
+        q.Map(
+          q.Paginate(q.Match(q.Index('tagged_entry'), tag), {
+            size,
+            after: ts,
+          }),
+          q.Lambda('x', q.Get(q.Var('x')))
+        )
+      )
+      .then(
+        object({
+          after: optional(tuple([number(), object(), object()]).map(x => x[0])),
+          data: array(this.entryWithID),
+        }).runPromise
+      )
+      .then(({ after, data }) => ({ after, entries: data }));
   }
 
   async update({ id, ...data }: WithID<Entry>) {

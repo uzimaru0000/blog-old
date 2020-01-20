@@ -71,7 +71,10 @@ export namespace Handler {
     try {
       const ts = Number(req.query.after) || undefined;
       const size = Number(req.query.size) || undefined;
-      const { after, entries } = await repo.getAll(ts, size);
+      const tag = req.query.tag;
+      const { after, entries } = await (tag
+        ? repo.getWithTag(tag, ts, size)
+        : repo.getAll(ts, size));
       send(res, 200, { after, entries: entries.map(entryEncoder) });
     } catch (e) {
       console.error(e);
