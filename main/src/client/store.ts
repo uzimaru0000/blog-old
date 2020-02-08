@@ -2,7 +2,9 @@ import * as React from 'react';
 import { Entry, WithID, entry } from '../../../common/model';
 import * as API from './api';
 import { dict } from '@mojotech/json-type-validation';
-
+// useFetchやuseReducerを使って外部通信用のhooksにしてあげればいいかも？
+// グローバルで持たないといけない何かがあるorこのコンポーネントでの状態更新を全体で引き回したい場合以外の理由ならそっちのがコンポーネントに閉じていて、扱いやすそう
+// 個人的にはSetIsLoadingだけをグローバルで管理すればいいかなと思うんだけど、何か理由とかこだわりがあるのかも？
 interface State {
   entries: { [id: string]: Entry };
   after?: number;

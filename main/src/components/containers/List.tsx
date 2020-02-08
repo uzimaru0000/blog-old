@@ -16,6 +16,9 @@ export default (props: Props) => {
   const ref = React.useRef(null);
   const isIntersection = useIntersection(ref.current);
 
+  // これは別定義して、命名をつけた方が良さそうかな?
+  // refとpropsをを受けて、状態を更新する方が
+  // ロジックをViewに露出せずにすみそう！
   React.useEffect(() => {
     if (isIntersection && props.onEnd) {
       props.onEnd();
@@ -26,7 +29,9 @@ export default (props: Props) => {
     <Wrapper>
       <InnerWrapper>
         {props.entries.length === 0
-          ? [...Array(3)].map((_, i) => <DummyEntry key={i} />)
+        // 真の方の条件も改行すると読みやすそう
+          ? [...Array(3)].map((_, i) => (
+              <DummyEntry key={i} />))
           : props.entries.map(x => (
               <Entry key={x.id} {...x} isExtend={false} />
             ))}

@@ -13,8 +13,11 @@ import {
   number,
   tuple,
   optional,
-} from '@mojotech/json-type-validation';
+} from '@mojotech/json-type-validation'
 
+// accountとentityっていう概念の違いが同列に表現されているので、違和感を感じたので、ここは揃えた方が良いと思いました！
+// 個人的には分ける必要はないかなと思ったけど、何かあるのかな？
+// 何のRepositoryかわかると良さそう
 export interface Repository {
   create(data: Entry): Promise<string>;
   getAll(
@@ -31,6 +34,7 @@ export interface Repository {
   delete(id: string): Promise<void>;
 }
 
+// 命名が同じだから、若干わかりづらいかな？
 export class FaunaRepository implements Repository {
   private client: faunadb.Client;
 

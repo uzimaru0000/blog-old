@@ -3,6 +3,7 @@ import ListContainer from '../../components/containers/List';
 import { UseReducer, GetEntriesWithTag, SetIsLoading } from '../store';
 import { RouteComponentProps } from 'react-router-dom';
 
+// propsを受けてentitiesを返して、propsの状態を監視して、entriesを更新するhooksを作ると良さそう
 export default (props: RouteComponentProps<{ tag: string }> & UseReducer) => {
   const entries = Object.keys(props.state.entries)
     .map(x => ({
