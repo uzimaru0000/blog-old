@@ -12,6 +12,7 @@
     "watch:server": "parcel watch -t node --bundle-node-modules -d ./main/dist ./main/src/server/index.tsx",
     "watch:client": "parcel watch -d ./main/dist/js ./main/src/client/index.tsx",
     "watch:api": "parcel watch -t node --bundle-node-modules -d ./api/dist ./api/src/index.ts",
+    "watch:cli": "parcel watch -t node -d ./cli/dist ./cli/src/index.ts",
     "build:server": "parcel build -t node --bundle-node-modules --no-source-maps -d ./main/dist ./main/src/server/index.tsx",
     "build:client": "parcel build -d ./main/dist/js --no-source-maps ./main/src/client/index.tsx",
     "build:api": "parcel build -t node --bundle-node-modules --no-source-maps -d ./api/dist ./api/src/index.ts",
@@ -41,6 +42,7 @@
     "@types/test-listen": "^1.1.0",
     "ava": "^2.4.0",
     "concurrently": "^5.0.2",
+    "node-elm-compiler": "^5.0.4",
     "now": "^16.7.0",
     "parcel": "^1.12.4",
     "request-promise": "^4.2.5",
@@ -73,7 +75,8 @@
     "react-syntax-highlighter": "^9.0.1",
     "sharp": "^0.23.4",
     "styled-components": "^4.4.1",
-    "styled-media-query": "^2.1.2"
+    "styled-media-query": "^2.1.2",
+    "xhr2": "^0.2.0"
   },
   "ava": {
     "compileEnhancements": false,

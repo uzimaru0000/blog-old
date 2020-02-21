@@ -17,3 +17,14 @@ export const mkdir = (path: string) =>
       }
     });
   });
+
+export const readFile = (path: string) =>
+  new Promise<Buffer>((res, rej) => {
+    fs.readFile(path, (err, data) => {
+      if (err) {
+        rej(err);
+      } else {
+        res(data);
+      }
+    });
+  });
