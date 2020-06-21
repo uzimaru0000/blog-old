@@ -61,6 +61,7 @@ const MarkdownH1 = styled(H1)`
 
 const MarkdownH2 = styled(H2)`
   border-bottom: 1px solid var(--color-text-25);
+  margin-top: 1rem;
 `;
 
 const InlineCode = styled.code`
