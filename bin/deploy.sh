@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-now --prod
+npx vercel --prod
 
-now alias ${pbpaste} blog.uzimaru.com
+npx vercel alias ${pbpaste} blog.uzimaru.com
