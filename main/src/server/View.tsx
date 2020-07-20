@@ -85,6 +85,11 @@ const Head = ({
       }}
     />
     {style}
+    <script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      charSet="utf-8"
+    ></script>
   </head>
 );
 

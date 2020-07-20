@@ -26,6 +26,7 @@ export default (props: ReactMarkdownProps) => (
         thematicBreak: Hr,
         image: Img,
       }}
+      linkTarget="_blank"
       {...props}
     />
   </div>
