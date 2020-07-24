@@ -1,0 +1,56 @@
+:root {
+  --color-black: rgb(51, 51, 51);
+  --color-white: #fff;
+  --color-primary: #199861;
+  --color-accent: #58aeff;
+  --color-black-75: rgba(51, 51, 51, 0.75);
+  --color-black-50: rgba(51, 51, 51, 0.5);
+  --color-black-25: rgba(51, 51, 51, 0.25);
+  --color-black-10: rgba(51, 51, 51, 0.1);
+  --color-black-5: rgba(51, 51, 51, 0.05);
+
+  @media (prefers-color-scheme: light) {
+    --color-base: var(--color-white);
+    --color-text: var(--color-black);
+    --color-text-75: rgba(51, 51, 51, 0.75);
+    --color-text-50: rgba(51, 51, 51, 0.5);
+    --color-text-25: rgba(51, 51, 51, 0.25);
+    --color-text-10: rgba(51, 51, 51, 0.1);
+    --color-text-5: rgba(51, 51, 51, 0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    --color-base: var(--color-black);
+    --color-text: var(--color-white);
+    --color-text-75: rgba(255, 255, 255, 0.75);
+    --color-text-50: rgba(255, 255, 255, 0.5);
+    --color-text-25: rgba(255, 255, 255, 0.25);
+    --color-text-10: rgba(255, 255, 255, 0.1);
+    --color-text-5: rgba(255, 255, 255, 0.05);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 8px;
+  }
+}
+
+html {
+  background-color: var(--color-base);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  font-size: inherit;
+  text-decoration: none;
+}
