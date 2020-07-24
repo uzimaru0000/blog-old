@@ -7,6 +7,7 @@ import { search, Emoji, emojify } from 'node-emoji';
 
 import { Elm } from './Elm/Main.elm';
 import { uploadImage } from './api';
+import createOGP from './ogp';
 import { existDir, mkdir, readFile } from './util';
 
 const clientId = 'f1d7dba802aa5fd';
@@ -29,7 +30,7 @@ const clientId = 'f1d7dba802aa5fd';
       },
     });
 
-    app.ports.output.subscribe(async opts => {
+    app.ports.output.subscribe(async (opts) => {
       try {
         const { value } = await prompts(opts);
         if (value === undefined) {
@@ -47,9 +48,9 @@ const clientId = 'f1d7dba802aa5fd';
       process.exit(code);
     });
 
-    app.ports.save.subscribe(async token => {
+    app.ports.save.subscribe(async (token) => {
       await existDir(`${process.env.HOME}/.blog`).then(
-        x => !x && mkdir(`${process.env.HOME}/.blog`)
+        (x) => !x && mkdir(`${process.env.HOME}/.blog`)
       );
 
       fs.writeFileSync(
@@ -60,23 +61,23 @@ const clientId = 'f1d7dba802aa5fd';
       console.log('Login success');
     });
 
-    app.ports.read.subscribe(async path => {
+    app.ports.read.subscribe(async (path) => {
       const data = await readFile(path)
-        .then(x => emojify(x.toString()))
+        .then((x) => emojify(x.toString()))
         .then(emojiProcess)
         .then(localImageProcess);
       app.ports.readFile.send(data);
     });
 
-    app.ports.makeOGP.subscribe(async title => {
-      const ogpImage = `http://placehold.jp/1200x630.png?text=${encodeURIComponent(
-        title
-      )}`;
-      app.ports.uploadResult.send(ogpImage);
+    app.ports.makeOGP.subscribe(async (title) => {
+      const ogpImage = await createOGP(title).then((x) =>
+        uploadImage(clientId, x)
+      );
+      app.ports.uploadResult.send(ogpImage.data.link);
     });
 
-    app.ports.uploadImage.subscribe(async path => {
-      const result = await readFile(path).then(x => uploadImage(clientId, x));
+    app.ports.uploadImage.subscribe(async (path) => {
+      const result = await readFile(path).then((x) => uploadImage(clientId, x));
       app.ports.uploadResult.send(result.data.link);
     });
   } catch (e) {
@@ -89,9 +90,9 @@ const localImageProcess = async (md: string) => {
   const localURL = findLocalImage(md);
 
   const replaceFuncs = await Promise.all(
-    localURL.map(x =>
+    localURL.map((x) =>
       readFile(x)
-        .then(buff => uploadImage('f1d7dba802aa5fd', buff))
+        .then((buff) => uploadImage('f1d7dba802aa5fd', buff))
         .then(({ data }) => [x, data.link] as [string, string])
         .then(([path, url]) => replaceLocalImage(path, url))
     )
@@ -110,8 +111,8 @@ const findLocalImage = (md: string) => {
 
   return md
     .match(new RegExp(imageRegex, 'g'))
-    .map(x => x.match(imageRegex)[1])
-    .filter(x => !urlRegex.test(x));
+    .map((x) => x.match(imageRegex)[1])
+    .filter((x) => !urlRegex.test(x));
 };
 
 const replaceLocalImage = (localPath: string, url: string) => (md: string) =>
@@ -120,8 +121,8 @@ const replaceLocalImage = (localPath: string, url: string) => (md: string) =>
 // 絵文字系の処理
 const emojiProcess = (md: string) =>
   findEmoji(md)
-    .map(x => (console.log(x), x))
-    .map(x => [x, search(x)] as [string, Emoji[]])
+    .map((x) => (console.log(x), x))
+    .map((x) => [x, search(x)] as [string, Emoji[]])
     .filter(([_, x]) => x.length > 0)
     .map(([str, [emoji]]) => [str, emoji] as [string, Emoji])
     .map(([str, emoji]) => (md: string) => md.replace(str, emoji.emoji))
@@ -134,5 +135,7 @@ const findEmoji = (md: string) => {
     return [];
   }
 
-  return md.match(new RegExp(emojiRegex, 'g')).map(x => x.match(emojiRegex)[0]);
+  return md
+    .match(new RegExp(emojiRegex, 'g'))
+    .map((x) => x.match(emojiRegex)[0]);
 };
