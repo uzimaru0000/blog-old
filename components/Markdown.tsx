@@ -34,7 +34,7 @@ export default (props: ReactMarkdownProps) => (
 
 const Text = styled.p`
   ${Plane}
-  margin: 0.5rem 0;
+  margin-bottom: 1rem;
 `;
 
 const Heading = (level: number) => (props: React.PropsWithChildren<{}>) => {
@@ -62,7 +62,7 @@ const MarkdownH1 = styled(H1)`
 
 const MarkdownH2 = styled(H2)`
   border-bottom: 1px solid var(--color-text-25);
-  margin-top: 1rem;
+  margin: 1.5rem 0 1rem;
 `;
 
 const InlineCode = styled.code`

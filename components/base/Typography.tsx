@@ -4,6 +4,7 @@ const master = css`
   margin: 0;
   padding: 0;
   color: var(--color-text);
+  line-height: 2;
 `;
 
 export const H1 = styled.h1`
