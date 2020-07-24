@@ -71,10 +71,12 @@ const CatchUp = styled.div<{ image: string }>`
   width: 100vw;
   z-index: -1;
   height: calc(100vh - 64px);
-  background: ${({ image }) =>
-    image
-      ? `url(${image})`
-      : 'linear-gradient(45deg, var(--color-primary), var(--color-accent))'};
+  background-image: ${({ image }) => `url(${image})`};
+  background-color: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
   background-size: cover;
   transition: 300ms ease;
 `;
