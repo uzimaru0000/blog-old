@@ -15,7 +15,17 @@ export default (props: ReactMarkdownProps) => (
         heading: (props: React.PropsWithChildren<{ level: number }>) =>
           Heading(props.level)(props),
         code: (props: React.PropsWithChildren<{ value: string }>) => (
-          <SyntaxHighlighter style={monokai} {...props}>
+          <SyntaxHighlighter
+            style={{
+              ...monokai,
+              hljs: {
+                ...monokai.hljs,
+                padding: '1rem',
+                'border-radius': '0.5rem',
+              },
+            }}
+            {...props}
+          >
             {props.value}
           </SyntaxHighlighter>
         ),

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { H1, H5, H6, Plane } from './base/Typography';
@@ -35,7 +34,7 @@ export default (props: Props) => (
       )}
       {!props.isExtend && (
         <ReadMoreWrapper>
-          <ReadMore as={Link} href={`/entry/${props.id}`}>
+          <ReadMore as="a" href={`/entry/${props.id}`}>
             <FontAwesomeIcon icon="angle-right" />
             READ MORE
           </ReadMore>
