@@ -8,6 +8,7 @@ type SubCmd
     = Get String
     | Post String String
     | List
+    | Update (Maybe String)
     | Remove (Maybe String)
     | Login
     | Help
@@ -39,6 +40,17 @@ list : Parser SubCmd
 list =
     Parser.succeed List
         |. Parser.keyword "ls"
+
+
+update : Parser SubCmd
+update =
+    Parser.succeed Update
+        |. Parser.keyword "update"
+        |. Parser.spaces
+        |= Parser.oneOf
+            [ Utils.string |> Parser.map Just
+            , Parser.succeed Maybe.Nothing
+            ]
 
 
 remove : Parser SubCmd

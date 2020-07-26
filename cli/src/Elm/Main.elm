@@ -10,6 +10,7 @@ import SubCmd.List as List
 import SubCmd.Login as Login
 import SubCmd.Post as Post
 import SubCmd.Remove as Remove
+import SubCmd.Update as Update
 
 
 type alias Flags =
@@ -22,6 +23,7 @@ type State
     = Get Get.Model
     | List List.Model
     | Login Login.Model
+    | Update Update.Model
     | Remove Remove.Model
     | Post Post.Model
     | Help
@@ -38,6 +40,7 @@ type Msg
     | ListMsg List.Msg
     | LoginMsg Login.Msg
     | RemoveMsg Remove.Msg
+    | UpdateMsg Update.Msg
     | PostMsg Post.Msg
 
 
@@ -48,6 +51,7 @@ subCmdParser =
         , SubCmd.get
         , SubCmd.post
         , SubCmd.list
+        , SubCmd.update
         , SubCmd.login
         , SubCmd.remove
         ]
@@ -96,6 +100,15 @@ init { argv, token } =
                         Nothing ->
                             ( Help, Port.exit ( 1, "This command required to login." ) )
 
+                SubCmd.Update maybeId ->
+                    case token of
+                        Just t ->
+                            Update.init t maybeId
+                                |> Tuple.mapBoth Update (Cmd.map UpdateMsg)
+
+                        Nothing ->
+                            ( Help, Port.exit ( 1, "This command required to login." ) )
+
                 SubCmd.Help ->
                     ( Help, Help.exec () )
     in
@@ -122,6 +135,17 @@ update msg model =
                         |> Tuple.mapBoth
                             (\x -> { model | state = Login x })
                             (Cmd.map LoginMsg)
+
+                _ ->
+                    ( model, Cmd.none )
+
+        UpdateMsg subMsg ->
+            case model.state of
+                Update subModel ->
+                    Update.exec subMsg subModel
+                        |> Tuple.mapBoth
+                            (\x -> { model | state = Update x })
+                            (Cmd.map UpdateMsg)
 
                 _ ->
                     ( model, Cmd.none )
@@ -167,6 +191,10 @@ subscriptions model =
         Post subModel ->
             Post.subscriptions subModel
                 |> Sub.map PostMsg
+
+        Update subModel ->
+            Update.subscriptions subModel
+                |> Sub.map UpdateMsg
 
         _ ->
             Sub.none

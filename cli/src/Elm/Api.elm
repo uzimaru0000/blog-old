@@ -122,6 +122,18 @@ postEntry token draft =
         }
 
 
+updateEntry : String -> String -> Draft -> Task Http.Error ()
+updateEntry token id draft =
+    Http.task
+        { method = "PUT"
+        , headers = [ Http.header "Authorization" <| bearerToken token ]
+        , url = [ endPoint, "entry", id ] |> String.join "/"
+        , body = Http.jsonBody <| draftEncoder draft
+        , resolver = jsonResolver <| JD.succeed ()
+        , timeout = Nothing
+        }
+
+
 removeEntry : String -> String -> Task Http.Error ()
 removeEntry token id =
     Http.task

@@ -8,7 +8,7 @@ import { search, Emoji, emojify } from 'node-emoji';
 import { Elm } from './Elm/Main.elm';
 import { uploadImage } from './api';
 import createOGP from './ogp';
-import { existDir, mkdir, readFile } from './util';
+import { existDir, mkdir, readFile, openEditor, remove } from './util';
 
 const clientId = 'f1d7dba802aa5fd';
 
@@ -79,6 +79,25 @@ const clientId = 'f1d7dba802aa5fd';
     app.ports.uploadImage.subscribe(async (path) => {
       const result = await readFile(path).then((x) => uploadImage(clientId, x));
       app.ports.uploadResult.send(result.data.link);
+    });
+
+    app.ports.openFile.subscribe(async (content) => {
+      const tmpPath = `${process.env.HOME}/.blog/tmp.md`;
+
+      fs.writeFileSync(tmpPath, content);
+
+      try {
+        await openEditor(tmpPath);
+        const result = await readFile(tmpPath)
+          .then((x) => emojify(x.toString()))
+          .then(emojiProcess)
+          .then(localImageProcess);
+        remove(tmpPath);
+
+        app.ports.readFile.send(result);
+      } catch (e) {
+        console.log(e);
+      }
     });
   } catch (e) {
     console.log(e);

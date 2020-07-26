@@ -1,4 +1,4 @@
-port module SubCmd.Post exposing (..)
+module SubCmd.Post exposing (..)
 
 import Api
 import Http
@@ -55,7 +55,7 @@ init token mdFilePath imageFilePath =
       , date = Time.millisToPosix 0
       , ogp = ""
       }
-    , [ read mdFilePath
+    , [ Port.read mdFilePath
       , Task.perform GetTime Time.now
       ]
         |> Cmd.batch
@@ -72,7 +72,7 @@ exec msg model =
 
         ReadMDFile content ->
             ( { model | content = content, state = UploadImage_ }
-            , uploadImage model.imageFilePath
+            , Port.uploadImage model.imageFilePath
             )
 
         UploadImageFile image ->
@@ -89,7 +89,7 @@ exec msg model =
 
         InputTags tags ->
             ( { model | tags = tags, state = UploadOGP_ }
-            , makeOGP model.title
+            , Port.makeOGP model.title
             )
 
         UploadOGP ogp ->
@@ -121,13 +121,13 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     case model.state of
         ReadMDFile_ ->
-            readFile ReadMDFile
+            Port.readFile ReadMDFile
 
         UploadImage_ ->
-            uploadResult UploadImageFile
+            Port.uploadResult UploadImageFile
 
         UploadOGP_ ->
-            uploadResult UploadOGP
+            Port.uploadResult UploadOGP
 
         InputTitle_ ->
             JD.decodeValue (JD.map InputTitle JD.string)
@@ -138,22 +138,3 @@ subscriptions model =
             JD.decodeValue (JD.map InputTags <| JD.list JD.string)
                 >> Result.withDefault NoOp
                 |> Port.input
-
-
-
--- PORT
-
-
-port read : String -> Cmd msg
-
-
-port uploadImage : String -> Cmd msg
-
-
-port uploadResult : (String -> msg) -> Sub msg
-
-
-port readFile : (String -> msg) -> Sub msg
-
-
-port makeOGP : String -> Cmd msg

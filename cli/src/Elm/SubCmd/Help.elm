@@ -15,6 +15,7 @@ exec _ =
                 , list
                 , login
                 , post
+                , update
                 , remove
                 ]
                     |> String.join "\n"
@@ -45,6 +46,11 @@ post =
 list : String
 list =
     "ls : Listing blog entries"
+
+
+update : String
+update =
+    "update [id] : Update blog entry"
 
 
 login : String

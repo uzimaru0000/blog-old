@@ -15,14 +15,16 @@ export namespace Elm {
 
     interface Ports {
       output: Subscribe<prompts.PromptObject<'value'>>;
-      input: Send<any>;
       exit: Subscribe<[number, string]>;
       save: Subscribe<string>;
       read: Subscribe<string>;
       readFile: Send<string>;
       uploadImage: Subscribe<string>;
-      uploadResult: Send<string>;
       makeOGP: Subscribe<string>;
+      openFile: Subscribe<string>;
+
+      input: Send<any>;
+      uploadResult: Send<string>;
     }
 
     interface Subscribe<T> {
