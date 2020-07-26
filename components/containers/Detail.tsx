@@ -78,6 +78,7 @@ const CatchUp = styled.div<{ image: string }>`
     var(--color-accent)
   );
   background-size: cover;
+  background-position: center;
   transition: 300ms ease;
 `;
 
