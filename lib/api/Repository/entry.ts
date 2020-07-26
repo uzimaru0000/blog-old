@@ -99,7 +99,7 @@ export class FaunaRepository implements Repository {
 
   async update({ id, ...data }: WithID<Entry>) {
     await this.client.query(
-      q.Update(q.Ref(q.Collection('Entry'), id), { data })
+      q.Update(q.Ref(q.Collection('Entry'), id), { data: entryEncoder(data) })
     );
   }
 
