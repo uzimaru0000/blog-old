@@ -41,7 +41,7 @@ const Top: NextPage<{ entries: WithID<Entry>[]; after?: number }> = (props) => {
   }, [setAfter, data]);
 
   return (
-    <ListContainer isLoading={data ? false : true} onEnd={loadMore}>
+    <ListContainer isLoading={!data} onEnd={loadMore}>
       {entries.map((entry) => (
         <EntryView key={entry.id} {...entry}></EntryView>
       ))}
