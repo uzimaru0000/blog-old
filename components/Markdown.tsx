@@ -21,7 +21,7 @@ export default (props: ReactMarkdownProps) => (
               hljs: {
                 ...monokai.hljs,
                 padding: '1rem',
-                'border-radius': '0.5rem',
+                borderRadius: '0.5rem',
               },
             }}
             {...props}
