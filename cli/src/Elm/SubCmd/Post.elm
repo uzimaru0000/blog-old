@@ -7,6 +7,7 @@ import Port
 import Prompts
 import Task
 import Time
+import Utils exposing (makeOGP)
 
 
 type Msg
@@ -14,7 +15,6 @@ type Msg
     | GetTime Time.Posix
     | ReadMDFile String
     | UploadImageFile String
-    | UploadOGP String
     | InputTitle String
     | InputTags (List String)
     | PostResult (Result Http.Error ())
@@ -23,7 +23,6 @@ type Msg
 type State
     = ReadMDFile_
     | UploadImage_
-    | UploadOGP_
     | InputTitle_
     | InputTags_
 
@@ -88,12 +87,7 @@ exec msg model =
             )
 
         InputTags tags ->
-            ( { model | tags = tags, state = UploadOGP_ }
-            , Port.makeOGP model.title
-            )
-
-        UploadOGP ogp ->
-            ( { model | ogp = ogp }
+            ( { model | tags = tags, ogp = makeOGP model.title }
             , Task.attempt
                 PostResult
                 (Api.postEntry
@@ -103,7 +97,7 @@ exec msg model =
                     , tags = model.tags
                     , image = model.image
                     , date = model.date
-                    , ogp = ogp
+                    , ogp = makeOGP model.title
                     }
                 )
             )
@@ -125,9 +119,6 @@ subscriptions model =
 
         UploadImage_ ->
             Port.uploadResult UploadImageFile
-
-        UploadOGP_ ->
-            Port.uploadResult UploadOGP
 
         InputTitle_ ->
             JD.decodeValue (JD.map InputTitle JD.string)

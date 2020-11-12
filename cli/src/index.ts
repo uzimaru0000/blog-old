@@ -7,7 +7,6 @@ import { search, Emoji, emojify } from 'node-emoji';
 
 import { Elm } from './Elm/Main.elm';
 import { uploadImage } from './api';
-import createOGP from './ogp';
 import { existDir, mkdir, readFile, openEditor, remove } from './util';
 
 const clientId = 'f1d7dba802aa5fd';
@@ -67,13 +66,6 @@ const clientId = 'f1d7dba802aa5fd';
         .then(emojiProcess)
         .then(localImageProcess);
       app.ports.readFile.send(data);
-    });
-
-    app.ports.makeOGP.subscribe(async (title) => {
-      const ogpImage = await createOGP(title).then((x) =>
-        uploadImage(clientId, x)
-      );
-      app.ports.uploadResult.send(ogpImage.data.link);
     });
 
     app.ports.uploadImage.subscribe(async (path) => {

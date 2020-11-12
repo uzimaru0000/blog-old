@@ -9,6 +9,7 @@ import Prompts
 import SubCmd.Remove exposing (Msg(..))
 import Task
 import Time
+import Utils exposing (makeOGP)
 
 
 type Msg
@@ -19,7 +20,6 @@ type Msg
     | Choice State
     | UpdateTitle String
     | UpdateContent String
-    | UpdateOGP String
     | UpdateImage String
     | UpdateTags (List String)
     | InputImageFile String
@@ -31,7 +31,6 @@ type State
     | ChoiceEntry_
     | ChoiceProps_
     | UpdateTitle_
-    | UpdateOGP_
     | UpdateContent_
     | InputImageFile_
     | UpdateImage_
@@ -127,20 +126,12 @@ exec msg model =
                     ( { model | state = state }, inputCmd state )
 
         UpdateTitle title ->
-            ( { model | state = UpdateOGP_, title = title }
-            , Port.makeOGP title
+            ( { model | state = ChoiceProps_, title = title, ogp = makeOGP title }
+            , choicePropsCmd
             )
 
         UpdateTags tags ->
             ( { model | state = ChoiceProps_, tags = tags }
-            , choicePropsCmd
-            )
-
-        UpdateOGP ogp ->
-            ( { model
-                | state = ChoiceProps_
-                , ogp = ogp
-              }
             , choicePropsCmd
             )
 
@@ -180,9 +171,6 @@ subscriptions model =
             JD.decodeValue (JD.map UpdateTitle JD.string)
                 >> Result.withDefault NoOp
                 |> Port.input
-
-        UpdateOGP_ ->
-            Port.uploadResult UpdateOGP
 
         UpdateTags_ ->
             JD.decodeValue (JD.map UpdateTags <| JD.list JD.string)

@@ -25,7 +25,4 @@ port uploadResult : (String -> msg) -> Sub msg
 port readFile : (String -> msg) -> Sub msg
 
 
-port makeOGP : String -> Cmd msg
-
-
 port openFile : String -> Cmd msg
