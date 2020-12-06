@@ -15,7 +15,7 @@ export const H1 = styled.h1`
 
 export const H2 = styled.h2`
   ${master}
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: normal;
 `;
 
@@ -27,19 +27,18 @@ export const H3 = styled.h3`
 
 export const H4 = styled.h4`
   ${master}
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: normal;
 `;
 export const H5 = styled.h5`
   ${master}
-  font-size: 1.5rem;
   font-weight: 500;
 `;
 
 export const H6 = styled.h6`
   ${master}
-  font-size: 1.5rem;
-  font-weight: normal;
+  font-weight: 500;
+  opacity: 0.5;
 `;
 
 export const Plane = css`
