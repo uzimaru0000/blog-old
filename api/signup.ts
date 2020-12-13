@@ -1,12 +1,12 @@
-import { Account } from '../../lib/api/Repository';
-import { authData } from '../../lib/api/authorizer';
-import { Role } from '../../lib/model';
-import { route, post } from '../../lib/api/router';
+import { Account } from '../lib/api/Repository';
+import { authData } from '../lib/api/authorizer';
+import { Role } from '../lib/model';
+import { route, post } from '../lib/api/router';
 import {
   WithRepository,
   WithAuthorizer,
   errorHandle,
-} from '../../lib/api/handler';
+} from '../lib/api/handler';
 import { accountRepo, authorizer } from './_config';
 
 const createAccount: WithRepository<Account.Repository, WithAuthorizer> = (

@@ -1,7 +1,7 @@
-import { WithRepository, errorHandle } from '../../lib/api/handler';
-import { route, get } from '../../lib/api/router';
-import { Entry } from '../../lib/api/Repository';
-import { entryEncoder } from '../../lib/model';
+import { WithRepository, errorHandle } from '../lib/api/handler';
+import { route, get } from '../lib/api/router';
+import { Entry } from '../lib/api/Repository';
+import { entryEncoder } from '../lib/model';
 import { entryRepo } from './_config';
 
 const getEntries: WithRepository<Entry.Repository> = (repo) => async (

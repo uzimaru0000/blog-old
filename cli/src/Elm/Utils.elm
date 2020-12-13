@@ -11,4 +11,8 @@ string =
             |. Parser.chompWhile (\c -> c /= ' ' && c /= '\t')
 
 makeOGP : String -> String
-makeOGP title = Builder.crossOrigin "https://blog-ogp.uzimaru.com" [ title ] []
+makeOGP title =
+    Builder.crossOrigin
+        "https://blog.uzimaru.com"
+        [ "api", "ogp" ]
+        [ Builder.string "title" title ]

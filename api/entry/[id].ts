@@ -1,8 +1,8 @@
-import { route, get, put, del } from '../../../lib/api/router';
-import { WithRepository, errorHandle } from '../../../lib/api/handler';
-import { Entry } from '../../../lib/api/Repository';
-import { entry, entryEncoder, withID, Entry as E } from '../../../lib/model';
-import { verifying } from '../../../lib/api/middleware';
+import { route, get, put, del } from '../../lib/api/router';
+import { WithRepository, errorHandle } from '../../lib/api/handler';
+import { Entry } from '../../lib/api/Repository';
+import { entry, entryEncoder, withID, Entry as E } from '../../lib/model';
+import { verifying } from '../../lib/api/middleware';
 import { authorizer, entryRepo } from '../_config';
 
 const getEntry: WithRepository<Entry.Repository> = (repo) => async (

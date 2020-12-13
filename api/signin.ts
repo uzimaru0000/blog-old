@@ -1,13 +1,13 @@
-import { route, post } from '../../lib/api/router';
-import { verifying } from '../../lib/api/middleware';
+import { route, post } from '../lib/api/router';
+import { verifying } from '../lib/api/middleware';
 import { authorizer, accountRepo } from './_config';
 import {
   WithRepository,
   WithAuthorizer,
   errorHandle,
-} from '../../lib/api/handler';
-import { authData } from '../../lib/api/authorizer';
-import { Account } from '../../lib/api/Repository';
+} from '../lib/api/handler';
+import { authData } from '../lib/api/authorizer';
+import { Account } from '../lib/api/Repository';
 
 const signin: WithRepository<Account.Repository, WithAuthorizer> = (repo) => (
   authorizer
