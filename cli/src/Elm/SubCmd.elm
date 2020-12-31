@@ -6,7 +6,7 @@ import Utils
 
 type SubCmd
     = Get String
-    | Post String String
+    | Post String (Maybe String)
     | List
     | Update (Maybe String)
     | Remove (Maybe String)
@@ -33,7 +33,10 @@ post =
         |. Parser.spaces
         |= Utils.string
         |. Parser.spaces
-        |= Utils.string
+        |= Parser.oneOf 
+            [ Utils.string |> Parser.map Just
+            , Parser.succeed Maybe.Nothing
+            ]
 
 
 list : Parser SubCmd

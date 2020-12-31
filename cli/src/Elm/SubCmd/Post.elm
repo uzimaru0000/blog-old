@@ -30,7 +30,7 @@ type State
 type alias Model =
     { token : String
     , state : State
-    , imageFilePath : String
+    , imageFilePath : Maybe String
 
     -- draft data
     , title : String
@@ -42,7 +42,7 @@ type alias Model =
     }
 
 
-init : String -> String -> String -> ( Model, Cmd Msg )
+init : String -> String -> Maybe String -> ( Model, Cmd Msg )
 init token mdFilePath imageFilePath =
     ( { token = token
       , state = ReadMDFile_
@@ -70,8 +70,16 @@ exec msg model =
             )
 
         ReadMDFile content ->
-            ( { model | content = content, state = UploadImage_ }
-            , Port.uploadImage model.imageFilePath
+            ( { model
+                | content = content
+                , state = if model.imageFilePath == Nothing then InputTitle_ else UploadImage_
+              }
+            , model.imageFilePath
+                |> Maybe.map Port.uploadImage
+                |> Maybe.withDefault
+                    (Prompts.text "Input entry title : "
+                        |> Port.output
+                    )
             )
 
         UploadImageFile image ->
@@ -81,13 +89,13 @@ exec msg model =
             )
 
         InputTitle title ->
-            ( { model | title = title, state = InputTags_ }
+            ( { model | title = title, state = InputTags_, ogp = makeOGP model.title }
             , Prompts.list "Input tags : "
                 |> Port.output
             )
 
         InputTags tags ->
-            ( { model | tags = tags, ogp = makeOGP model.title }
+            ( { model | tags = tags }
             , Task.attempt
                 PostResult
                 (Api.postEntry
@@ -95,7 +103,9 @@ exec msg model =
                     { title = model.title
                     , content = model.content
                     , tags = model.tags
-                    , image = model.image
+                    , image = model.imageFilePath
+                                |> Maybe.map (always model.image)
+                                |> Maybe.withDefault (makeOGP model.title)
                     , date = model.date
                     , ogp = makeOGP model.title
                     }
