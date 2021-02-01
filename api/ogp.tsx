@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 const Css = () => {
     return <style dangerouslySetInnerHTML={{ __html: `
         body {

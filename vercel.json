@@ -1,7 +1,10 @@
 {
     "functions": {
-        "api/ogp.tsx": {
-            "runtime": "@uzimaru0000/vercel-og-image@1.4.0"
+        "api/dist/ogp.js": {
+            "runtime": "@uzimaru0000/vercel-og-image@1.5.0"
         }
-    }
+    },
+    "rewrites": [
+      { "source": "/api/ogp", "destination": "/api/dist/ogp" }
+    ]
 }

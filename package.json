@@ -7,11 +7,12 @@
   },
   "scripts": {
     "start": "next start",
-    "build": "next build",
+    "build": "next build && npm run build:ogp",
     "dev": "next",
     "test:api": "ava api/test/*.test.ts",
     "watch:cli": "parcel watch -t node -d ./cli/dist ./cli/src/index.ts",
     "build:cli": "parcel build -t node --no-source-maps -d ./cli/dist ./cli/src/index.ts",
+    "build:ogp": "parcel build -t node --no-source-maps --bundle-node-modules -d ./api/dist ./api/ogp.tsx",
     "deploy": "./bin/deploy.sh"
   },
   "keywords": [],
